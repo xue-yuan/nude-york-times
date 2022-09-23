@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "Nude York Times",
+    "version": "1.2",
+    "description": "Read New York Times Without Subscription.",
+    "icons": {
+      "48": "ny-48.ico",
+      "96": "ny-96.ico"
+    },
+    "content_scripts": [
+      {
+        "matches": ["*://www.nytimes.com/*"],
+        "js": ["index.js"]
+      }
+    ]
+}
