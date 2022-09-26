@@ -10,4 +10,4 @@
 
 **Firefox**
 
-1. *ongoing*
+1. Download at [Firefox Addons](https://addons.mozilla.org/zh-TW/firefox/addon/nude-york-times/)
