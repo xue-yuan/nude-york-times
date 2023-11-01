@@ -9,8 +9,12 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://www.nytimes.com/*"],
-      "js": ["index.js"]
+      "matches": [
+        "*://www.nytimes.com/*"
+      ],
+      "js": [
+        "index.js"
+      ]
     }
   ]
 }

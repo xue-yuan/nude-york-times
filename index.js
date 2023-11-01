@@ -1,38 +1,71 @@
-var intervalId = null;
-var counter = 0;
+async function main() {
+  let article = await getArticle(window.location.href);
+  reviseStyle();
+  removePaywall();
+  removeBackgroundColor();
+  replaceArticle(article);
+}
 
-intervalId = setInterval(() => {
-    if (counter === 10) {
-        clearInterval(intervalId);
-        return;
+async function getArticle(url) {
+  let html = await fetch(url, {
+    credentials: 'include',
+    method: 'GET',
+    mode: 'cors',
+  })
+    .then((res) => res.text())
+    .then((res) => {
+      return res;
+    });
+
+  return getMatch(html);
+}
+
+function getMatch(html) {
+  const regexp = /<section.*?<\/section>/gm;
+  const matches = [...html.matchAll(regexp)];
+
+  let articleBody = '';
+
+  for (let i = 0; i < matches.length; ++i) {
+    if (matches[i][0].includes('articleBody')) {
+      articleBody = matches[i][0];
     }
+  }
 
-    counter++;
-    let gateway = document.getElementById('gateway-content');
-    if (gateway !== null) {
-        document.getElementById('gateway-content')?.remove();
-    }
+  return articleBody;
+}
 
-    let article = document.evaluate(
-        '/html/body/div/div/div',
-        document.documentElement,
-        null,
-        XPathResult.FIRST_ORDERED_NODE_TYPE,
-        null
-    ).singleNodeValue;
-    if (article !== null) {
-        article.style.overflow = 'scroll';
-    }
+function reviseStyle() {
+  let el = document.querySelectorAll('[data-testid="vi-gateway-container"]')[0];
+  el.style.overflow = 'scroll';
+}
 
-    let shadowBox = document.evaluate(
-        '/html/body/div/div/div/div[3]',
-        document.documentElement,
-        null,
-        XPathResult.FIRST_ORDERED_NODE_TYPE,
-        null
-    ).singleNodeValue;
-    if (shadowBox !== null) {
-        shadowBox?.remove();
-    }
+function removePaywall() {
+  document.querySelector('#gateway-content')?.remove();
+}
 
-}, 2000);
+function removeBackgroundColor() {
+  let mask = document.evaluate(
+    '/html/body/div[1]/div/div[1]/div[3]',
+    document.documentElement,
+    null,
+    XPathResult.FIRST_ORDERED_NODE_TYPE,
+    null
+  ).singleNodeValue;
+
+  if (mask !== null) {
+    mask.style.background = 'rgba(255,255,255,0)';
+  }
+}
+
+function replaceArticle(article) {
+  let tmp = document.createElement('div');
+  tmp.innerHTML = article;
+
+  let oldArticle = document.querySelector('[name="articleBody"]');
+  oldArticle.parentNode.replaceChild(tmp.firstChild, oldArticle);
+}
+
+document.addEventListener('DOMContentLoaded', (e) => {
+  main();
+});
