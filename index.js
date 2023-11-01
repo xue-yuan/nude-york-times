@@ -66,6 +66,14 @@ function replaceArticle(article) {
   oldArticle.parentNode.replaceChild(tmp.firstChild, oldArticle);
 }
 
-document.addEventListener('DOMContentLoaded', (e) => {
-  main();
+window.addEventListener('load', () => {
+  setTimeout(main, 3000);
 });
+
+// function createButton() {
+//   let paywall = document.querySelector('#gateway-content');
+//   let button = document.createElement('button');
+
+//   button.textContent = 'remove';
+//   paywall.appendChild(button);
+// }
