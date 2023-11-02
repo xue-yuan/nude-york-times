@@ -1,4 +1,4 @@
-async function main() {
+async function remove() {
   let article = await getArticle(window.location.href);
   reviseStyle();
   removePaywall();
@@ -66,14 +66,34 @@ function replaceArticle(article) {
   oldArticle.parentNode.replaceChild(tmp.firstChild, oldArticle);
 }
 
-window.addEventListener('load', () => {
-  setTimeout(main, 3000);
-});
+function createRemoveButton() {
+  setTimeout(function () {
+    let paywall = document.querySelector('#gateway-content');
+    if (paywall === null) {
+      createRemoveButton();
+    } else {
+      paywall.style.position = 'relative';
+      paywall.textContent = '';
+      paywall.appendChild(getRemoveButton());
+    }
+  }, 3000);
+}
 
-// function createButton() {
-//   let paywall = document.querySelector('#gateway-content');
-//   let button = document.createElement('button');
+function getRemoveButton() {
+  let button = document.createElement('button');
+  button.textContent = 'Remove Paywall 🎉';
+  button.style.position = 'absolute';
+  button.style.top = '50%';
+  button.style.left = '50%';
+  button.style.transform = 'translate(-50%, -50%)';
+  button.style.padding = '30px';
+  button.style.background = 'black';
+  button.style.color = 'white';
+  button.style.borderRadius = '30px';
+  button.style.fontSize = '30px';
+  button.addEventListener('click', remove);
 
-//   button.textContent = 'remove';
-//   paywall.appendChild(button);
-// }
+  return button;
+}
+
+createRemoveButton();

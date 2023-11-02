@@ -23,5 +23,4 @@
 
 ## Future Work
 
-1. Switch auto-remove to click-to-remove
-2. Add lazy loaded images to placeholder.
+1. Add lazy loaded images to placeholder.

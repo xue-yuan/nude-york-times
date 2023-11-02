@@ -1,4 +1,9 @@
 {
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{36212978-a605-44df-85c9-204ab7c887ef}"
+    }
+  },
   "manifest_version": 3,
   "name": "Nude York Times",
   "version": "1.2",
