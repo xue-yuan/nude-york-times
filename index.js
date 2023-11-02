@@ -91,6 +91,7 @@ function getRemoveButton() {
   button.style.color = 'white';
   button.style.borderRadius = '30px';
   button.style.fontSize = '30px';
+  button.style.fontFamily = 'courier';
   button.addEventListener('click', remove);
 
   return button;
